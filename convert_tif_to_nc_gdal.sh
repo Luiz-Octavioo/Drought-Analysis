@@ -39,7 +39,7 @@ echo "Done."
 
 # Set time dimension
 echo "Setting time dimension..."
-cdo -O settaxis,2001-01-01,00:00,1mon ${file_name}_tmp.nc ${file_name}_tmp.nc
+cdo settaxis,2001-01-01,00:00,1mon ${file_name}_tmp.nc ${file_name}_tmpf.nc
 echo "Done."
 
 echo 'Processing finished.'
