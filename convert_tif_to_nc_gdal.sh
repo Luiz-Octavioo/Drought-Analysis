@@ -4,9 +4,22 @@
 echo "================================"
 echo "Convert TIF to netCDF using GDAL"
 echo "================================"
+
+# Set path to
+PATH_TIF="Dados_Modis_NDVI"
+
+if [ ! -d "$PATH_TIF" ]; then
+  echo "Directory $PATH_TIF not found"
+  exit 1
+fi
+cd $PATH_TIF || exit
+
 for file in *.tif ; do
   echo "Processing $file..."
-  gdal_translate -of netCDF $file $file.nc
+  # split file name and extension
+  filename=${file%.*}
+  # extension=${file##*.}
+  gdal_translate -of netCDF "$file" "$filename".nc
 done
 
 echo "Finish converting processing."
@@ -26,7 +39,7 @@ echo "Done."
 
 # Set time dimension
 echo "Setting time dimension..."
-cdo settaxis,2001-01-01,00:00,1mon ${file_name}_tmp.nc ${file_name}_tmpf.nc
+cdo -O settaxis,2001-01-01,00:00,1mon ${file_name}_tmp.nc ${file_name}_tmp.nc
 echo "Done."
 
 echo 'Processing finished.'
